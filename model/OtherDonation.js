@@ -14,6 +14,7 @@ const otherDonationSchema = mongoose.Schema(
     name: {
       type: String,
       required: true,
+      lowercase: true,
     },
     number: {
       type: String,
@@ -22,10 +23,12 @@ const otherDonationSchema = mongoose.Schema(
     residence: {
       type: String,
       required: true,
+      lowercase: true,
     },
-    amount: {
-      type: Number,
+    offer: {
+      type: String,
       required: true,
+      lowercase: true,
     },
     createdAt: String,
     updatedAt: String,

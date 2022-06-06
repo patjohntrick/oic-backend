@@ -35,7 +35,7 @@ router.get("/other/:id", async (req, res) => {
 router.post("/other/post", async (req, res) => {
   const otherDonation = new OtherDonation({
     name: req.body.name,
-    amount: req.body.amount,
+    offer: req.body.offer,
     number: req.body.number,
     residence: req.body.residence,
   });
