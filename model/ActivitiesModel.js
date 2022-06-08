@@ -33,6 +33,13 @@ const activitiesSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    attendee: {
+      type: String,
+      required: true,
+    },
+    done: {
+      type: Boolean,
+    },
   },
   { timestamps: true }
 );

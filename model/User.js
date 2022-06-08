@@ -48,6 +48,12 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    moneydonation: {
+      type: Array,
+    },
+    otherdonation: {
+      type: Array,
+    },
     createdAt: {
       type: String,
     },

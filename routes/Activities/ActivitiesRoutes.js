@@ -23,6 +23,8 @@ router.post("/post", async (req, res) => {
       description: req.body.description,
       time: req.body.time,
       date: req.body.date,
+      attendee: req.body.attendee,
+      done: false,
     };
     const activity = await new Activity(newActivity);
     await activity.save();
@@ -46,6 +48,18 @@ router.put("/put/:id", async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(400).json({ status: 400, message: "can't edit activity" });
+  }
+});
+// done activity
+router.get("/done/:id", async (req, res) => {
+  try {
+    const activity = await Activity.findByIdAndUpdate(req.params.id);
+    activity.done = !activity.done;
+    await activity.save();
+    res.status(201).json(activity);
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({ status: 400, message: "can't done activity" });
   }
 });
 

@@ -40,40 +40,6 @@ router.get("/:id", async (req, res) => {
     console.error(error.message);
   }
 });
-// query user
-// router.get("/search/:search", async (req, res) => {
-//   try {
-//     const name = await User.find({ name: req.params.search });
-//     const ministry = await User.find({ name: req.params.search });
-//     res.status(200).json(name);
-//   } catch (error) {
-//     res.status(400).json({ message: "can't get user", status: 400 });
-//     console.error(error.message);
-//   }
-// });
-
-// // another query
-// router.get("/search", async (req, res) => {
-//   try {
-//     const query = req.query.query;
-//     res.json({ query });
-//     console.log(req.query);
-//   } catch (error) {
-//     res.status(400).json({ message: "can't get user", status: 400 });
-//     console.error(error.message);
-//   }
-// });
-
-// router.get("/:name", async (req, res) => {
-//   const user = await User.find(req.params.name);
-
-//   try {
-//     res.status(200).json(user);
-//   } catch (error) {
-//     res.status(400).json({ message: "can't get user", status: 400 });
-//     console.error(error.message);
-//   }
-// });
 
 // POST
 router.post("/add", async (req, res) => {
@@ -100,6 +66,25 @@ router.post("/add", async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: "can't create new user", status: 400 });
     console.log(error.message);
+  }
+});
+// add donation
+router.post("/:id/moneydonation", async (req, res) => {
+  try {
+    const moneyDonation = {
+      name: req.body.name,
+      number: req.body.number,
+      residence: req.body.residence,
+      amount: req.body.amount,
+    };
+    const { id } = req.params;
+    const user = await User.findById(id);
+    user.moneydonation.push(moneyDonation);
+    await user.save();
+    res.status(201).json(user);
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({ status: 400, message: "can't add money donation" });
   }
 });
 
