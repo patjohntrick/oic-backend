@@ -36,6 +36,7 @@ const activitiesSchema = new mongoose.Schema(
     attendee: {
       type: String,
       required: true,
+      lowercase: true,
     },
     done: {
       type: Boolean,

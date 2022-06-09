@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
+const uuid = require("uuid");
 
 // Model
 const User = require("../model/User");
@@ -68,13 +69,15 @@ router.post("/add", async (req, res) => {
     console.log(error.message);
   }
 });
-// add donation
+// add money donation
 router.post("/:id/moneydonation", async (req, res) => {
   try {
     const moneyDonation = {
+      uuid: uuid.v1(),
       name: req.body.name,
       number: req.body.number,
       residence: req.body.residence,
+      createdAt: req.body.date,
       amount: req.body.amount,
     };
     const { id } = req.params;
@@ -85,6 +88,28 @@ router.post("/:id/moneydonation", async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(400).json({ status: 400, message: "can't add money donation" });
+  }
+});
+// add other donation
+router.post("/:id/otherdonation", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    // date
+    const otherDonation = {
+      uuid: uuid.v1(),
+      name: req.body.name,
+      number: req.body.number,
+      residence: req.body.residence,
+      createdAt: req.body.date,
+      offer: req.body.offer,
+    };
+    user.otherdonation.push(otherDonation);
+    await user.save();
+    res.status(201).json(user);
+  } catch (error) {
+    console.log(error.message);
+    res.status(400).json({ status: 400, message: "can't add other donation" });
   }
 });
 
