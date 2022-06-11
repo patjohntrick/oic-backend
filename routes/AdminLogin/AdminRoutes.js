@@ -30,11 +30,11 @@ router.get("/:id", async (req, res) => {
 // POST
 // register
 router.post("/register", async (req, res) => {
+  // const hashPassword = await bcrypt.hash(req.body.password, 10);
   try {
-    const hashPassword = await bcrypt.hash(req.body.password, 10);
     const registerAdmin = {
       name: req.body.name,
-      password: hashPassword,
+      password: req.body.password,
     };
     const admin = await Admin.create(registerAdmin);
     await admin.save();
@@ -48,21 +48,21 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const adminName = await Admin.findOne({ name: req.body.name });
-    console.log(adminName);
     if (!adminName) {
       res.status(409).json({ message: "name not found", status: 409 });
     }
-    const validPass = await bcrypt.compare(
-      adminName.password,
-      req.body.password
-    );
+    const validPass = adminName.password == req.body.password ? true : false;
     console.log(validPass);
+    console.log(adminName);
     if (validPass) {
       const token = jwt.sign(
         {
           name: adminName.name,
         },
-        "sikretongmalupet"
+        "sikretongmalupet",
+        {
+          expiresIn: "24h",
+        }
       );
       res.status(201).json({ admin: token });
     } else {
