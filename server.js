@@ -32,5 +32,5 @@ app.use('/admin', AdminLoginRouter);
 
 const PORT = process.env.PORT || 5000;
 // const PORT = 'https://localhost:5000';
-// console.log(process.env.PORT);
+console.log(process.env.PORT);
 app.listen(PORT, () => console.log(`app is listening to port ${PORT}`));
