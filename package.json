@@ -4,8 +4,7 @@
   "description": "Management System",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon server.js",
-    "start": "server.js"
+    "start": "nodemon server.js"
   },
   "keywords": [],
   "author": "PATRICK",
